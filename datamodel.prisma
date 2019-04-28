@@ -1,0 +1,63 @@
+type User {
+  id: ID! @unique @id
+  nickname: String!
+  ipAdress: String
+  board: [Board!]! @relation(name: "BoardsOfUser", onDelete: CASCADE)
+  rooms: [Room!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Board {
+  id: ID! @unique @id
+  caption: String!
+  content: String!
+  user: User @relation(name: "BoardsOfUser")
+  files: [File!]! @relation(name: "FilesOfBoard", onDelete: CASCADE)
+  likes: [Like!]! @relation(name: "LikesOfBoard", onDelete: CASCADE)
+  comments: [Comment!] @relation(name: "CommentsOfBoard", onDelete: CASCADE)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Like {
+  id: ID! @unique @id
+  board: Board @relation(name: "LikesOfBoard")
+  room: Room @relation(name: "LikesOfRoom")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type File {
+  id: ID! @unique @id
+  url: String!
+  board: Board @relation(name: "FilesOfBoard")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Room {
+  id: ID! @unique @id
+  participants: [User!]!
+  messages: [Message!]!
+  likes: [Like!] @relation(name: "LikesOfRoom", onDelete: CASCADE)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Comment {
+  id: ID! @unique @id
+  text: String!
+  user: User @relation(name: "CommentsOfUser")
+  board: Board @relation(name: "CommentsOfBoard")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Message {
+  id: ID! @unique @id
+  text: String!
+  room: Room!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}

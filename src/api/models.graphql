@@ -1,0 +1,49 @@
+type User {
+  id: ID!
+  nickname: String!
+  ipAdress: String!
+  board: [Board!]!
+  rooms: [Room!]!
+}
+
+type Board {
+  id: ID!
+  caption: String!
+  content: String!
+  user: User
+  files: [File!]!
+  likes: [Like!]!
+  comments: [Comment!]
+}
+
+type Like {
+  id: ID!
+  board: Board
+  room: Room
+}
+
+type File {
+  id: ID!
+  url: String!
+  board: Board
+}
+
+type Room {
+  id: ID!
+  participants: [User!]!
+  messages: [Message!]!
+  likes: [Like!]
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  user: User
+  board: Board
+}
+
+type Message {
+  id: ID!
+  text: String!
+  room: Room!
+}
